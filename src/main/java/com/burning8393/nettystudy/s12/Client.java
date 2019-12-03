@@ -1,4 +1,4 @@
-package com.burning8393.nettystudy.s11;
+package com.burning8393.nettystudy.s12;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
