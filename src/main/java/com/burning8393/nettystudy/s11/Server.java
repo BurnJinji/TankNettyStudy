@@ -1,4 +1,4 @@
-package com.burning8393.nettystudy.s10;
+package com.burning8393.nettystudy.s11;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
@@ -16,7 +16,7 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 public class Server {
     public static ChannelGroup clients = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
-    public static void main(String[] args) {
+    public void serverStart() {
         NioEventLoopGroup bossGroup = new NioEventLoopGroup(1);
         NioEventLoopGroup workerGroup = new NioEventLoopGroup(2);
 
@@ -24,9 +24,10 @@ public class Server {
             ServerBootstrap bootstrap = new ServerBootstrap();
             ChannelFuture f = bootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
-                    .childHandler(null)
+                    .childHandler(new ServerInitializer())
                     .bind(8888)
                     .sync();
+            ServerFrame.INSTANCE.updateServerMsg("server started");
             f.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();
